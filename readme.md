@@ -4,13 +4,15 @@ This repo implements **Elementary Cellular Automata (ECA)** as a **discrete-time
 
 Mathematically, for a ring of $n$ cells with state $x(t)\in\{0,1\}^n$,
 
-\[x(t+1)=\underbrace{\text{reduce}}_{\; \{0,1\}^{n\times 8}\to\{0,1\}^n}
+```math
+x(t+1)=\underbrace{\text{reduce}}_{\; \{0,1\}^{n\times 8}\to\{0,1\}^n}
 \big(
 \underbrace{\text{lift}}_{\; \{0,1\}^{n\times 3}\to\{0,1\}^{n\times 8}}
 (
 \underbrace{\text{map}}_{\; \{0,1\}^n\to\{0,1\}^{n\times 3}}
 (x(t))
-\big)\big).\]
+\big)\big).
+```
 
 > **Code correspondence:**
 > `ECA.map → ECA.lift → ECA.reduce` and the composition is wired in `ECA.iterate` (see `eca.py`).
