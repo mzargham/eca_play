@@ -85,9 +85,9 @@ so each row $z[i,:]$ is one-hot for which of the 8 patterns occurs at site $i$.
 For rule $R\in\{0,\dots,255\}$, its Wolfram-ordered bits
 $\mathbf{b}=(b_0,\dots,b_7)^\top\in\mathbb{B}^8$ are
 
-$$
+```math
 \mathbf b=\texttt{wolfram\_bits(rule)}.
-$$
+```
 
 The local update is a Boolean dot product of the one-hot $z[i,:]$ with $\mathbf b$:
 
