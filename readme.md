@@ -197,6 +197,14 @@ This works uniformly for **all 256 rules**. For the linear subset (e.g., 90, 150
 
 ---
 
+## CUPY based Performant Implementation
+
+The NumPy implementation in `eca.py` is didact in nature, emphasizing the Bool-valued discrete time dynamical system interpretation of the Elementary Cellular Automata. The GPU accelerated version in `cupy_eca.py` is streamlined for performance. It stored in this repo for reference, but may require extra work to set up your environment to work with your GPU. I am using a Mac at the moment so I resorted to developing and testing the CuPy code on Google Collab.
+
+Therefore, [`cupy_play.ipynb`](cupy_play.ipynb) is available on [Google Colab](https://colab.research.google.com/drive/1r3JimzP09t7JFdaX58PtfO0RVI0tyCbk?usp=sharing).
+
+---
+
 ## Extending and experimenting
 
 * **Radius $k>1$:** generalize $C$ to $n\times(2k+1)\times n$ and $S$ to $2^{2k+1}\times(2k+1)\times 2$; `lift` and `reduce` generalize verbatim.
