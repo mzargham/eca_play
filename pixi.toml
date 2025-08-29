@@ -1,0 +1,14 @@
+[project]
+name = "eca-sim"
+version = "0.1.0"
+description = "Elementary Cellular Automata simulation and visualization"
+authors = ["Zargham <zargham@block.science>"]
+
+# Tell pixi where to get packages
+channels = ["conda-forge"]
+platforms = ["osx-64"]
+
+[dependencies]
+python = ">=3.13.5,<3.14"
+numpy = ">=2.3.2,<3"
+matplotlib = ">=3.10.5,<4"
