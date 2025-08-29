@@ -76,7 +76,7 @@ so each row $z[i,:]$ is one-hot for which of the 8 patterns occurs at site $i$.
 **Implements:**
 
 * `selector_tensor()` constructs $S$ once.
-* `ECA.lift(y)` performs the OR/AND broadcast‐contractions to produce (z\`.
+* `ECA.lift(y)` performs the OR/AND broadcast‐contractions to produce $z$.
 
 ---
 
