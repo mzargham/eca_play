@@ -194,16 +194,25 @@ class ECA:
         ax.set_title(f"Truth table for {self.name}")
         ax.set_ylabel("Output bit")
 
-    def space_time(self, x0: np.ndarray, steps: int = 64) -> None:
+    def space_time(self, x0: np.ndarray, steps: int = 64, divider_period: int = 0) -> None:
         """Plot the space-time diagram for the given initial condition."""
         X = self.run(x0, steps)
         n = X.shape[1]
         fig_width = max(6, n / 10)
         fig_height = max(3, steps / 10)
         fig, ax = plt.subplots(figsize=(fig_width, fig_height))
+        if divider_period is not None and divider_period > 0:
+            for r in range(1, steps // divider_period):
+                ax.axhline(r * divider_period-.5, color='whitesmoke', linestyle='--', linewidth=2)
+            for r in range(1, n // divider_period):
+                ax.axvline(r * divider_period-.5, color='whitesmoke', linestyle='--', linewidth=2)
         ax.imshow(X.astype(int), aspect="auto")  # default colormap
         ax.set_xlabel("Cell index")
         ax.set_ylabel("Time step")
+        ax.set_xlim(-0.5,n-0.5)
+        ax.set_ylim(steps-0.5,-0.5)
+        ax.set_xticks(range(0, n, max(1, n // 10)))
+        ax.set_yticks(range(steps-1, -1, -max(1, steps // 10)))
         ax.set_title(f"Space-time diagram for {self.name}")
         plt.show()
 
