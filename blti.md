@@ -2,7 +2,7 @@
 
 ## **System Overview**
 
-We consider a **discrete-time dynamical system** over the Boolean hypercube $\{0,1\}^n$, defined by:
+We consider a **discrete-time dynamical system** over the Boolean hypercube $\left\{0,1\right\}^n$, defined by:
 
 ```math
 z_{k+1} = f(z_k)
