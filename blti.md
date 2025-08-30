@@ -62,9 +62,8 @@ In classical settings, a **jet space** encodes not just the value of a function 
 
 * A $k$-jet of a function at a point encodes:
 
-  ```math
-  (x, f(x), f'(x), f''(x), \dots, f^{(k)}(x))
-  ```
+    $(x, f(x), f'(x), f''(x), \dots, f^{(k)}(x))$
+  
 * Used in control theory, PDEs, and variational calculus to describe the local behavior of trajectories or fields.
 
 ### Boolean Jet Space – Discrete Analog
