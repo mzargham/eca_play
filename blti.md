@@ -124,9 +124,7 @@ To perform Boolean Lyapunov analysis in this context, we treat $V(X_k)$ as a **d
 * If $V(X_{k+1}) < V(X_k)$ for all $X_k \notin M$, where $M \subseteq \mathbb{B}^{(k+1)n}$ is the set of minimal-energy configurations, then the system **asymptotically evolves toward $M$**.
 * If $V(X_{k+1}) \leq V(X_k)$, we apply a **LaSalle-style argument**: all trajectories enter and remain in the **largest invariant set contained in**
 
-  ```math
-  E = \{ X \in \{0,1\}^{(k+1)n} \mid V(X_{k+1}) = V(X_k) \}
-  ```
+  $E = \{ X \in \{0,1\}^{(k+1)n} \mid V(X_{k+1}) = V(X_k) \}
 
   and the system's long-term behavior is constrained to $E$.
 
