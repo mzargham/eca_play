@@ -17,16 +17,16 @@ The approach is fully implemented by the code in `eca.py` (map–lift–reduce) 
 * The ECA global state at time $t$ is $x(t)\in\mathbb B^n$.
 * Define the forward **XOR difference** operator $\Delta$ by
 
-  $$
+  ```math
   \Delta s(t) = s(t{+}1)\oplus s(t),
-  $$
+  ```
 
   and recursively $\Delta^{m+1}s(t)=\Delta(\Delta^m s)(t)$.
   Our **order-$k$ phase state** is the layered tuple
 
-  $$
+  ```math
   X^{(k)}(t)=\big(\Delta^0 x(t),\Delta^1 x(t),\ldots,\Delta^k x(t)\big)\in(\mathbb B^n)^{k+1}.
-  $$
+  ```
 
 ---
 
@@ -34,9 +34,9 @@ The approach is fully implemented by the code in `eca.py` (map–lift–reduce) 
 
 For radius-1 ECAs, one update is the composition
 
-$$
+```math
 x(t{+}1)=\underbrace{\text{reduce}}_{\mathbb{B}^{n\times 8}\to\mathbb{B}^n}\big(\underbrace{\text{lift}}_{\mathbb{B}^{n\times3}\to\mathbb{B}^{n\times 8}}(\underbrace{\text{map}}_{\mathbb{B}^n\to\mathbb{B}^{n\times3}}(x(t)))\big),
-$$
+```
 
 and the code wires it as `iterate(x) = reduce(lift(map(x)))` in `eca.py`. &#x20;
 
@@ -48,7 +48,7 @@ These same objects and type signatures are summarized in the README.&#x20;
 
 ---
 
-## 2) Order-$k$ phase space (layers $[x,\delta,\Delta^2,\ldots,\Delta^k]$)
+## 2) Order-$k$ phase space (layers $[x,\Delta,\Delta^2,\ldots,\Delta^k]$)
 
 The class `PhaseSpace` in `lasalle.py` stores the order-$k$ layers as a Boolean array of shape $(k{+}1,n)$ with row $j$ equal to $\Delta^j x(t)$.&#x20;
 
@@ -90,7 +90,7 @@ $$
 
 * `V_triples(x, w8)`: counts triple occurrences via `eca.map` + `eca.lift`.&#x20;
   (Recall `ECA.lift` returns a strict one-hot per site. )
-* `V_layers(layers, w8_per_layer)`: sums layerwise potentials to score $[x,\delta,\Delta^2,\dots]$.&#x20;
+* `V_layers(layers, w8_per_layer)`: sums layerwise potentials to score $[x,\Delta,\Delta^2,\dots]$.&#x20;
 
 Design $w$ so that **every** local 5-block (radius-1 context) satisfies $V_w$ non-increase; the set where equality holds (no “energy-dropping” contexts) is a **LaSalle equality set** $E$. The **largest invariant subset** of $E$ is then a dynamically stable subspace under the ECA dynamics.
 
@@ -100,8 +100,8 @@ Design $w$ so that **every** local 5-block (radius-1 context) satisfies $V_w$ no
 
 Working directly in the order-$k$ phase space gives algebraic predicates that are easy to test:
 
-* **Fixed points:** $\delta=\Delta^1 x=\mathbf 0$.
-* **2-cycles:** $\delta\neq \mathbf 0$ and $\delta$ is **fixed** by one phase step: $\Delta^1(t{+}1)=\Delta^1(t)$.
+* **Fixed points:** $\Delta=\Delta^1 x=\mathbf 0$.
+* **2-cycles:** $\Delta\neq \mathbf 0$ and $\Delta$ is **fixed** by one phase step: $\Delta^1(t{+}1)=\Delta^1(t)$.
 * **Periods dividing $2^r$:** if $\Delta^{2^r}x\equiv 0$ then $x(t{+}2^r)=x(t)$. Raising $k$ increases the range of detectable cycle lengths (e.g., $k{=}3$ covers $\{1,2,4,8\}$).
 
 `PhaseSpace.run(layers0, steps)` evolves the augmented state for analysis or visualization.&#x20;
@@ -122,7 +122,7 @@ Working directly in the order-$k$ phase space gives algebraic predicates that ar
    (See the iterate composition and type signatures in `eca.py` & README.) &#x20;
 
 2. **Initialize layers from a base state** $x$:
-   `layers0 = ps.init_from_x(x)` (builds $[x,\delta,\ldots,\Delta^k]$ from a short trajectory using binomial parity).
+   `layers0 = ps.init_from_x(x)` (builds $[x,\Delta,\ldots,\Delta^k]$ from a short trajectory using binomial parity).
 
 3. **Step the phase map**:
    `layers1 = ps.step(layers0)` (reconstructs $x(t..t{+}k)$, calls `eca.iterate` once, updates layers).&#x20;
@@ -139,7 +139,7 @@ Working directly in the order-$k$ phase space gives algebraic predicates that ar
 
 ## 7) Relation to linear rules and extensions
 
-* For GF(2)-**linear** rules (e.g., 90, 150), $\delta$ dynamics is linear and can be analyzed by standard algebra on subspaces; the same phase framework applies but with extra structure.
+* For GF(2)-**linear** rules (e.g., 90, 150), $\Delta$ dynamics is linear and can be analyzed by standard algebra on subspaces; the same phase framework applies but with extra structure.
 * **Larger neighborhoods:** the same map–lift–reduce factorization extends to radius $>1$ by enlarging the tensors $C$ and $S$; see the README’s “Extending and experimenting.”&#x20;
 
 ---
@@ -162,7 +162,7 @@ Working directly in the order-$k$ phase space gives algebraic predicates that ar
 ## 9) Takeaways
 
 * The **lifted one-hot basis** makes per-site rule application linear (in the Boolean semiring), enabling simple, local **LaSalle potentials** built from pattern counts.&#x20;
-* The **order-$k$ phase space** turns cycle detection into algebra on layers $[x,\delta,\Delta^2,\ldots]$ and provides clean **invariance predicates** to prune the state space efficiently.&#x20;
+* The **order-$k$ phase space** turns cycle detection into algebra on layers $[x,\Delta,\Delta^2,\ldots]$ and provides clean **invariance predicates** to prune the state space efficiently.&#x20;
 
 ---
 
